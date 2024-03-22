@@ -1,0 +1,416 @@
+Setting environment for using XAMPP for Windows.
+nashi@ZYTTA c:\xampp
+# cd \
+
+nashi@ZYTTA c:\
+# cd \xampp\mysql\bin
+
+nashi@ZYTTA c:\xampp\mysql\bin
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> USE dbkuliah;
+Database changed
+MariaDB [dbkuliah]> DESC jurusan;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(35) | NO   | UNI | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.029 sec)
+
+MariaDB [dbkuliah]> ALTER TABLE jurusan MODIFY id varchar(11) not null unique BEFORE nama;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'BEFORE nama' at line 1
+MariaDB [dbkuliah]> ALTER TABLE jurusan MODIFY id varchar(11) not null unique;
+Query OK, 0 rows affected (0.118 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> DESC jurusan;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | varchar(11) | NO   | PRI | NULL    |       |
+| nama  | varchar(35) | NO   | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.023 sec)
+
+MariaDB [dbkuliah]> ALTER TABLE jurusan MODIFY id int primary key auto_increment not null;
+ERROR 1068 (42000): Multiple primary key defined
+MariaDB [dbkuliah]> ALTER TABLE jurusan MODIFY id int not null;
+Query OK, 0 rows affected (0.071 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> DESC jurusan;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | NO   | PRI | NULL    |       |
+| nama  | varchar(35) | NO   | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.029 sec)
+
+MariaDB [dbkuliah]> DESC mahasiswa;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nim       | int(11)      | NO   |     | NULL    |                |
+| nama      | varchar(35)  | NO   | UNI | NULL    |                |
+| alamat    | varchar(200) | YES  |     | NULL    |                |
+| idjurusan | int(11)      | NO   |     | NULL    |                |
+| foto      | varchar(35)  | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+6 rows in set (0.027 sec)
+
+MariaDB [dbkuliah]> ALTER TABLE mahasiswa MODIFY nim varchar(11) not null;
+Query OK, 0 rows affected (0.068 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> DESC mahasiswa;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nim       | varchar(11)  | NO   |     | NULL    |                |
+| nama      | varchar(35)  | NO   | UNI | NULL    |                |
+| alamat    | varchar(200) | YES  |     | NULL    |                |
+| idjurusan | int(11)      | NO   |     | NULL    |                |
+| foto      | varchar(35)  | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+6 rows in set (0.024 sec)
+
+MariaDB [dbkuliah]> INSERT INTO jurusan
+    -> (id,nama) VALUES
+    -> ('1','Teknik Informatika'),
+    -> ('2','Sistem Informasi'),
+    -> ('2','Sistem Informasi'),;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 5
+MariaDB [dbkuliah]> INSERT INTO jurusan
+    -> ('','Teknik Informatika'),
+    -> ('','Sistem Informasi'),
+    -> ('','Bisnis Digital'),
+    -> ('','Sastra Jepang'),
+    -> ('','Matematika IPA');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''','Teknik Informatika'),
+('','Sistem Informasi'),
+('','Bisnis Digital'),
+(''...' at line 2
+MariaDB [dbkuliah]> INSERT INTO jurusan
+    -> ('1','Teknik Informatika'),
+    -> ('2','Sistem Informasi'),
+    -> ('3','Matematika IPA');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''1','Teknik Informatika'),
+('2','Sistem Informasi'),
+('3','Matematika IPA')' at line 2
+MariaDB [dbkuliah]> INSERT INTO jurusan
+    -> (id,nama) VALUES
+    -> ('','Teknik Informatika'),
+    -> ('','Sistem Informasi'),
+    -> ('','Bisnis Digital'),
+    -> ('','Sastra Jepang'),
+    -> ('','Matematika IPA');
+ERROR 1062 (23000): Duplicate entry '0' for key 'PRIMARY'
+MariaDB [dbkuliah]> INSERT INTO jurusan VALUES
+    -> ('','Teknik Informatika'),('','Sistem Informasi'),('','Bisnis Digital'),('','Sastra Jepang'),('','Matematika IPA'
+);
+ERROR 1062 (23000): Duplicate entry '0' for key 'PRIMARY'
+MariaDB [dbkuliah]> cls
+    -> cls;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'cls
+cls' at line 1
+MariaDB [dbkuliah]> DESC jurusan;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | NO   | PRI | NULL    |       |
+| nama  | varchar(35) | NO   | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.025 sec)
+
+MariaDB [dbkuliah]> INSERT INTO jurusan
+    -> (id,nama) VALUES
+    -> ('1','Teknik Informatika');
+Query OK, 1 row affected (0.010 sec)
+
+MariaDB [dbkuliah]> INSERT INTO jurusan
+    -> (id,nama) VALUES
+    -> ('2','Sistem Informasi'),
+    -> ('3','Bisnis Digital'),
+    -> ('4','Sastra Jepang'),
+    -> ('5','Matematika IPA');
+Query OK, 4 rows affected (0.008 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> DESC jurusan;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | NO   | PRI | NULL    |       |
+| nama  | varchar(35) | NO   | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.024 sec)
+
+MariaDB [dbkuliah]> SHOW * FROM jurusan;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '* FROM jurusan' at line 1
+MariaDB [dbkuliah]> SELECT * FROM jurusan;
++----+--------------------+
+| id | nama               |
++----+--------------------+
+|  3 | Bisnis Digital     |
+|  5 | Matematika IPA     |
+|  4 | Sastra Jepang      |
+|  2 | Sistem Informasi   |
+|  1 | Teknik Informatika |
++----+--------------------+
+5 rows in set (0.007 sec)
+
+MariaDB [dbkuliah]> INSERT INTO mahasiswa
+    -> (id,nim,nama,alamat,idjurusan,foto) VALUES
+    -> ('1','0110223312','Muhammad Ihsan','Depok City','1','ihsan.jpg'),
+    -> ('2','0110223313','Muhammad Syahrul','Bogor City','3','syahrul.jpg'),
+    -> ('3','0110223314','Muhammad Jamal','Medan City','2','jamal.jpg'),
+    -> ('4','0110223315','Muhammad Afif','Jakarta City','4','afif.jpg'),
+    -> ('5','0110223316','Muhammad Hasan','Kaltim City','5','hasan.jpg');
+Query OK, 5 rows affected (0.008 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah]> SELECT * FROM mahasiswa;
++----+------------+------------------+--------------+-----------+-------------+
+| id | nim        | nama             | alamat       | idjurusan | foto        |
++----+------------+------------------+--------------+-----------+-------------+
+|  1 | 0110223312 | Muhammad Ihsan   | Depok City   |         1 | ihsan.jpg   |
+|  2 | 0110223313 | Muhammad Syahrul | Bogor City   |         3 | syahrul.jpg |
+|  3 | 0110223314 | Muhammad Jamal   | Medan City   |         2 | jamal.jpg   |
+|  4 | 0110223315 | Muhammad Afif    | Jakarta City |         4 | afif.jpg    |
+|  5 | 0110223316 | Muhammad Hasan   | Kaltim City  |         5 | hasan.jpg   |
++----+------------+------------------+--------------+-----------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbkuliah]> SELECT nim,nama FROM mahasiswa;
++------------+------------------+
+| nim        | nama             |
++------------+------------------+
+| 0110223312 | Muhammad Ihsan   |
+| 0110223313 | Muhammad Syahrul |
+| 0110223314 | Muhammad Jamal   |
+| 0110223315 | Muhammad Afif    |
+| 0110223316 | Muhammad Hasan   |
++------------+------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbkuliah]> SELECT * FROM jurusan;
++----+--------------------+
+| id | nama               |
++----+--------------------+
+|  3 | Bisnis Digital     |
+|  5 | Matematika IPA     |
+|  4 | Sastra Jepang      |
+|  2 | Sistem Informasi   |
+|  1 | Teknik Informatika |
++----+--------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbkuliah]> USE dbti08;
+Database changed
+MariaDB [dbti08]> SHOW TABLES;
++------------------+
+| Tables_in_dbti08 |
++------------------+
+| barang           |
+| jenis            |
++------------------+
+2 rows in set (0.009 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang;
++----+--------------------+-------+------+---------+---------+--------------+
+| id | nama               | kode  | stok | harga   | idjenis | foto         |
++----+--------------------+-------+------+---------+---------+--------------+
+|  1 | Kulkas LG 14 Pintu | KL001 |    2 | 5000000 |       1 | Kulkas.jpg   |
+|  2 | Lemari Baju        | LM002 |    5 | 1000000 |       2 | Lemari.jpg   |
+|  3 | Laptop Asus ROG    | LP001 |   10 | 6000000 |       1 | Laptop.jpg   |
+|  4 | Basreng            | BS008 |  100 |   10000 |       3 | Bassreng.jpg |
+|  6 | Seblak             | SB013 |  100 |   15000 |       3 | Seblak.jpg   |
++----+--------------------+-------+------+---------+---------+--------------+
+5 rows in set (0.009 sec)
+
+MariaDB [dbti08]> SELECT * FROM jenis;
++----+------------+
+| id | nama       |
++----+------------+
+|  1 | Elektronik |
+|  2 | Furniture  |
+|  3 | Makanan    |
+|  4 | Minuman    |
++----+------------+
+4 rows in set (0.009 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE harga >= 1000000 AND stok >=5;
++----+-----------------+-------+------+---------+---------+------------+
+| id | nama            | kode  | stok | harga   | idjenis | foto       |
++----+-----------------+-------+------+---------+---------+------------+
+|  2 | Lemari Baju     | LM002 |    5 | 1000000 |       2 | Lemari.jpg |
+|  3 | Laptop Asus ROG | LP001 |   10 | 6000000 |       1 | Laptop.jpg |
++----+-----------------+-------+------+---------+---------+------------+
+2 rows in set (0.010 sec)
+
+MariaDB [dbti08]> SELECT * FROM barng WHERE harga >= 1000000 OR stok >=5;
+ERROR 1146 (42S02): Table 'dbti08.barng' doesn't exist
+MariaDB [dbti08]> SELECT * FROM barang WHERE harga >= 1000000 OR stok >=5;
++----+--------------------+-------+------+---------+---------+--------------+
+| id | nama               | kode  | stok | harga   | idjenis | foto         |
++----+--------------------+-------+------+---------+---------+--------------+
+|  1 | Kulkas LG 14 Pintu | KL001 |    2 | 5000000 |       1 | Kulkas.jpg   |
+|  2 | Lemari Baju        | LM002 |    5 | 1000000 |       2 | Lemari.jpg   |
+|  3 | Laptop Asus ROG    | LP001 |   10 | 6000000 |       1 | Laptop.jpg   |
+|  4 | Basreng            | BS008 |  100 |   10000 |       3 | Bassreng.jpg |
+|  6 | Seblak             | SB013 |  100 |   15000 |       3 | Seblak.jpg   |
++----+--------------------+-------+------+---------+---------+--------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE kode='KL001';
++----+--------------------+-------+------+---------+---------+------------+
+| id | nama               | kode  | stok | harga   | idjenis | foto       |
++----+--------------------+-------+------+---------+---------+------------+
+|  1 | Kulkas LG 14 Pintu | KL001 |    2 | 5000000 |       1 | Kulkas.jpg |
++----+--------------------+-------+------+---------+---------+------------+
+1 row in set (0.008 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE kode IN ('KL001','ES001');
++----+--------------------+-------+------+---------+---------+------------+
+| id | nama               | kode  | stok | harga   | idjenis | foto       |
++----+--------------------+-------+------+---------+---------+------------+
+|  1 | Kulkas LG 14 Pintu | KL001 |    2 | 5000000 |       1 | Kulkas.jpg |
++----+--------------------+-------+------+---------+---------+------------+
+1 row in set (0.011 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE kode NOT IN ('KL001','BS008');
++----+-----------------+-------+------+---------+---------+------------+
+| id | nama            | kode  | stok | harga   | idjenis | foto       |
++----+-----------------+-------+------+---------+---------+------------+
+|  2 | Lemari Baju     | LM002 |    5 | 1000000 |       2 | Lemari.jpg |
+|  3 | Laptop Asus ROG | LP001 |   10 | 6000000 |       1 | Laptop.jpg |
+|  6 | Seblak          | SB013 |  100 |   15000 |       3 | Seblak.jpg |
++----+-----------------+-------+------+---------+---------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE nama LIKE '%a%';
++----+--------------------+-------+------+---------+---------+--------------+
+| id | nama               | kode  | stok | harga   | idjenis | foto         |
++----+--------------------+-------+------+---------+---------+--------------+
+|  1 | Kulkas LG 14 Pintu | KL001 |    2 | 5000000 |       1 | Kulkas.jpg   |
+|  2 | Lemari Baju        | LM002 |    5 | 1000000 |       2 | Lemari.jpg   |
+|  3 | Laptop Asus ROG    | LP001 |   10 | 6000000 |       1 | Laptop.jpg   |
+|  4 | Basreng            | BS008 |  100 |   10000 |       3 | Bassreng.jpg |
+|  6 | Seblak             | SB013 |  100 |   15000 |       3 | Seblak.jpg   |
++----+--------------------+-------+------+---------+---------+--------------+
+5 rows in set (0.007 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang ORDER BY nama ASC;
++----+--------------------+-------+------+---------+---------+--------------+
+| id | nama               | kode  | stok | harga   | idjenis | foto         |
++----+--------------------+-------+------+---------+---------+--------------+
+|  4 | Basreng            | BS008 |  100 |   10000 |       3 | Bassreng.jpg |
+|  1 | Kulkas LG 14 Pintu | KL001 |    2 | 5000000 |       1 | Kulkas.jpg   |
+|  3 | Laptop Asus ROG    | LP001 |   10 | 6000000 |       1 | Laptop.jpg   |
+|  2 | Lemari Baju        | LM002 |    5 | 1000000 |       2 | Lemari.jpg   |
+|  6 | Seblak             | SB013 |  100 |   15000 |       3 | Seblak.jpg   |
++----+--------------------+-------+------+---------+---------+--------------+
+5 rows in set (0.007 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang ORDER BY nama DESC;
++----+--------------------+-------+------+---------+---------+--------------+
+| id | nama               | kode  | stok | harga   | idjenis | foto         |
++----+--------------------+-------+------+---------+---------+--------------+
+|  6 | Seblak             | SB013 |  100 |   15000 |       3 | Seblak.jpg   |
+|  2 | Lemari Baju        | LM002 |    5 | 1000000 |       2 | Lemari.jpg   |
+|  3 | Laptop Asus ROG    | LP001 |   10 | 6000000 |       1 | Laptop.jpg   |
+|  1 | Kulkas LG 14 Pintu | KL001 |    2 | 5000000 |       1 | Kulkas.jpg   |
+|  4 | Basreng            | BS008 |  100 |   10000 |       3 | Bassreng.jpg |
++----+--------------------+-------+------+---------+---------+--------------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang WHERE harga >= 1000000 ORDER BY nama DESC;
++----+--------------------+-------+------+---------+---------+------------+
+| id | nama               | kode  | stok | harga   | idjenis | foto       |
++----+--------------------+-------+------+---------+---------+------------+
+|  2 | Lemari Baju        | LM002 |    5 | 1000000 |       2 | Lemari.jpg |
+|  3 | Laptop Asus ROG    | LP001 |   10 | 6000000 |       1 | Laptop.jpg |
+|  1 | Kulkas LG 14 Pintu | KL001 |    2 | 5000000 |       1 | Kulkas.jpg |
++----+--------------------+-------+------+---------+---------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang LIMIT 2;
++----+--------------------+-------+------+---------+---------+------------+
+| id | nama               | kode  | stok | harga   | idjenis | foto       |
++----+--------------------+-------+------+---------+---------+------------+
+|  1 | Kulkas LG 14 Pintu | KL001 |    2 | 5000000 |       1 | Kulkas.jpg |
+|  2 | Lemari Baju        | LM002 |    5 | 1000000 |       2 | Lemari.jpg |
++----+--------------------+-------+------+---------+---------+------------+
+2 rows in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT * FROM barang LIMIT 2 OFFSET 2;
++----+-----------------+-------+------+---------+---------+--------------+
+| id | nama            | kode  | stok | harga   | idjenis | foto         |
++----+-----------------+-------+------+---------+---------+--------------+
+|  3 | Laptop Asus ROG | LP001 |   10 | 6000000 |       1 | Laptop.jpg   |
+|  4 | Basreng         | BS008 |  100 |   10000 |       3 | Bassreng.jpg |
++----+-----------------+-------+------+---------+---------+--------------+
+2 rows in set (0.008 sec)
+
+MariaDB [dbti08]> SELECT COUNT(harga) AS jumlah_barang FROM barang;
++---------------+
+| jumlah_barang |
++---------------+
+|             5 |
++---------------+
+1 row in set (0.009 sec)
+
+MariaDB [dbti08]> SELECT MAX(harga) AS barang_termahal FROM barang;
++-----------------+
+| barang_termahal |
++-----------------+
+|         6000000 |
++-----------------+
+1 row in set (0.007 sec)
+
+MariaDB [dbti08]> SELECT MIN(harga) AS barang_termurah FROM barang;
++-----------------+
+| barang_termurah |
++-----------------+
+|           10000 |
++-----------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]> SELECT AVG(harga) AS rata_rata FROM barang;
++--------------+
+| rata_rata    |
++--------------+
+| 2405000.0000 |
++--------------+
+1 row in set (0.007 sec)
+
+MariaDB [dbti08]> SELECT SUM(harga) AS total_harga FROM barang;
++-------------+
+| total_harga |
++-------------+
+|    12025000 |
++-------------+
+1 row in set (0.006 sec)
+
+MariaDB [dbti08]> SELECT SUM(harga) AS total_harga, MAX(harga) AS harga_termahal, MIN(harga) AS harga_termurah FROM barang;
++-------------+----------------+----------------+
+| total_harga | harga_termahal | harga_termurah |
++-------------+----------------+----------------+
+|    12025000 |        6000000 |          10000 |
++-------------+----------------+----------------+
+1 row in set (0.001 sec)
+
+MariaDB [dbti08]>
