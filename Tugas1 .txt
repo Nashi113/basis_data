@@ -1,0 +1,60 @@
+Setting environment for using XAMPP for Windows.
+nashi@ZYTTA c:\xampp
+# cd \
+
+nashi@ZYTTA c:\
+# cd \xampp\mysql\bin
+
+nashi@ZYTTA c:\xampp\mysql\bin
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| dbkuliah           |
+| dbti08             |
+| dbtoko             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+8 rows in set (0.064 sec)
+
+MariaDB [(none)]> USE dbkuliah;
+Database changed
+MariaDB [dbkuliah]> SELECT * FROM jurusan;
++----+--------------------+
+| id | nama               |
++----+--------------------+
+|  3 | Bisnis Digital     |
+|  5 | Matematika IPA     |
+|  4 | Sastra Jepang      |
+|  2 | Sistem Informasi   |
+|  1 | Teknik Informatika |
++----+--------------------+
+5 rows in set (0.106 sec)
+
+MariaDB [dbkuliah]> SELECT * FROM mahasiswa;
++----+------------+------------------+--------------+-----------+-------------+
+| id | nim        | nama             | alamat       | idjurusan | foto        |
++----+------------+------------------+--------------+-----------+-------------+
+|  1 | 0110223312 | Muhammad Ihsan   | Depok City   |         1 | ihsan.jpg   |
+|  2 | 0110223313 | Muhammad Syahrul | Bogor City   |         3 | syahrul.jpg |
+|  3 | 0110223314 | Muhammad Jamal   | Medan City   |         2 | jamal.jpg   |
+|  4 | 0110223315 | Muhammad Afif    | Jakarta City |         4 | afif.jpg    |
+|  5 | 0110223316 | Muhammad Hasan   | Kaltim City  |         5 | hasan.jpg   |
++----+------------+------------------+--------------+-----------+-------------+
+5 rows in set (0.009 sec)
+
+MariaDB [dbkuliah]>
